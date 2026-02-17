@@ -1,42 +1,42 @@
 #include <iostream>
-#include <unordered_map>
 #include <vector>
+#include <string>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 
-/*
-
-思路：遍历字符串数组，对每一个字符串排序。通过哈希表记录已排序字符串对应的原字符串数组，最后遍历一下哈希表即可。
-
-*/
 class Solution {
 public:
+    // 解法一：时间复杂度O(nklogk)，空间复杂度O(nk)，n是strs中字符串的数量，k是strs中字符串的最大长度
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        int n = strs.size();
-        vector<vector<string>> ans;
         unordered_map<string, vector<string>> hash;
-        for (int i = 0; i < n; i ++) {
-            string temp = strs[i];
-            sort(temp.begin(), temp.end());
-            hash[temp].push_back(strs[i]);
+        for (string s : strs) {
+            string tmp = s;
+            sort(tmp.begin(), tmp.end());
+            hash[tmp].push_back(s);
         }
-        for (auto& item: hash) {
-            ans.push_back(item.second);
+        vector<vector<string>> ret;
+        for (auto it : hash) {
+            ret.push_back(it.second);
         }
-        return ans;
+        return ret;
     }
 };
 
-int main() {
-    //vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-    //vector<string> strs = {""};
-    vector<string> strs = {"a"};
-    Solution sol;
-    vector<vector<string>> ans = sol.groupAnagrams(strs);
-    for (auto vec: ans) {
-        for (auto item: vec)
-            cout << item << " ";
+void showOutput(vector<vector<string>> strs) {
+    for (vector<string> strVec : strs) {
+        for (string s : strVec) {
+            cout << s << ",";
+        }
         cout << endl;
-    }    
-    return 0; 
+    }
+    cout << endl;
+}
+
+
+int main() {
+    Solution s;
+    vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+    vector<vector<string>> output = s.groupAnagrams(strs);
+    showOutput(output);
 }
