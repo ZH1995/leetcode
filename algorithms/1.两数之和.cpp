@@ -1,34 +1,51 @@
 #include <iostream>
-#include <unordered_map>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
-/*
-
-思路：遍历数组，同时用哈希表记录已经遍历过数字的下标。如果所求数字不在哈希表中，则添加映射；
-     若在哈希表中，则代表找到了，返回即可。
-
-*/
 class Solution {
 public:
+    /* 解法一：时间复杂度O(n)，空间复杂度O(n)
     vector<int> twoSum(vector<int>& nums, int target) {
-        int n = nums.size();
         unordered_map<int, int> hash;
-        for (int i = 0; i < n; i ++) {
-            int temp = target - nums[i];
-            if (hash.count(temp)) return vector<int>{hash[temp], i};
+        int size = nums.size();
+        for (int i = 0; i < size; i ++) {
+            int reqVal = target - nums[i];
+            auto it = hash.find(reqVal);
+            if (it != hash.end()) {
+                return vector<int>{it->second, i};
+            }
             hash[nums[i]] = i;
         }
         return vector<int>{};
     }
+    */
+    /* 解法二：时间复杂度O(n^2)，空间复杂度O(1)
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int size = nums.size();
+        for (int i = 0; i < size; i ++) {
+            for (int j = i + 1; j < size; j ++) {
+                if (nums[i] + nums[j] == target) {
+                    return vector<int>{i, j};
+                }
+            }
+        }
+        return vector<int>{};
+    }
+    */
 };
 
+void showVector(vector<int>& nums) {
+    for (int x : nums) {
+        cout << x << " ";
+    }
+    cout << endl;
+}
+
 int main() {
+    Solution s;
     vector<int> nums = {2,7,11,15};
     int target = 9;
-    Solution sol;
-    vector<int> ans = sol.twoSum(nums, target);
-    for (auto item: ans) cout << item << " ";        
-    cout << endl; 
-    return 0; 
+    vector<int> output = s.twoSum(nums, target);
+    showVector(output);
 }
