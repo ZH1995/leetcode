@@ -1,46 +1,48 @@
 #include <iostream>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
+#include <algorithm>
 using namespace std;
 
-/*
-
-思路：先用哈希表记录下s中出现的字符及个数，然后遍历t，每次自减计数，如果减到小于0，则返回false。
-     最后遍历哈希表，如果发现计数非0，则返回false，反之返回true。
-
-推荐：使用wchar_t支持宽字符和Unicode。
-*/
 class Solution {
 public:
-    /*
-    // 解法一：
+    /* 解法一： 时间复杂度：O(n)，空间复杂度O(n)
     bool isAnagram(string s, string t) {
-        int n = s.size(), m = t.size();
-        unordered_map<char, int> hash;
-        for (auto c: s) hash[c] ++;
-        for (auto c: t) {
-            if (--hash[c] < 0) return false;
+        if (s.size() != t.size()) return false;
+        unordered_map<char, int> ms;
+        for (char c : s) {
+            ms[c] ++;
         }
-        for (auto c: s) if (hash[c] != 0) return false;
+        for (char c : t) {
+            auto it = ms.find(c);
+            // map里没找到，返回false
+            if (it == ms.end()) {
+                return false;
+            }
+            int val = it->second;
+            // map里找到了，但是计数器小于等于0，返回false
+            if (val <= 0) return false;
+            // 更新计数器
+            ms[c] --;
+        }
         return true;
     }
     */
-    // 解法二：
+    // 解法二：时间复杂度O(nlogn)，空间复杂度O(logn)
     bool isAnagram(string s, string t) {
-        unordered_map<wchar_t, int> hash;
-        for (auto c: s) hash[c]++;
-        for (auto c: t) if (--hash[c] < 0) return false;
-        for (auto c: s) if (hash[c] != 0) return false;
-        return true;
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+        return s == t;
     }
+
 };
 
 int main() {
-    string s = "anagram", t = "nagaram";
-    //string s = "rat", t = "car";
-    //string s = "ab", t = "a";
     Solution sol;
-    bool ans = sol.isAnagram(s, t);
-    cout << ans << endl;
-    return 0; 
+    //string s = "anagram", t = "nagaram";
+    //string s = "rat", t = "car";
+    //string s = "a", t = "ab";
+    string s = "aacc", t = "ccac";
+    bool ret = sol.isAnagram(s, t);
+    cout << ret << endl;
 }
