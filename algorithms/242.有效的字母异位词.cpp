@@ -14,16 +14,7 @@ public:
             ms[c] ++;
         }
         for (char c : t) {
-            auto it = ms.find(c);
-            // map里没找到，返回false
-            if (it == ms.end()) {
-                return false;
-            }
-            int val = it->second;
-            // map里找到了，但是计数器小于等于0，返回false
-            if (val <= 0) return false;
-            // 更新计数器
-            ms[c] --;
+            if (--ms[c] < 0) return false;
         }
         return true;
     }
