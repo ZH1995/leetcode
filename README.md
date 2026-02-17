@@ -1,48 +1,17 @@
-# Algorithm
+# LeetCode Algorithms (C++)
 
-这个仓库包含我在各大平台（如LeetCode、牛客网等）的算法题解集合，主要使用C++实现。每个题解包含了详细的解题思路和代码实现。
+这个仓库收集了我在 LeetCode 平台的题解。每道题以单文件形式保存，文件名使用“题号.题目名.cpp”的格式，便于检索和复盘。
 
-## 项目结构
+## 仓库结构
 
-```sh
-Algorithm/
-├── README.md
-├── problems/
-│   ├── leetcode/
-│   │   ├── README.md
-│   │   ├── cn/
-│   │   │   ├── 12.整数转罗马数字.cpp
-│   │   │   ├── 13.罗马数字转整数.cpp
-│   │   │   ├── ...（更多题解文件）
-│   │   ├── en/
-│   │   │   ├── 1.Two-Sum.md
-│   │   │   ├── ...（更多英文题解文件）
-│   ├── nowcoder/
-│   │   ├── README.md
-│   │   ├── NB1-删除链表峰值.cpp
-│   │   ├── ...（更多题解文件）
-├── study-plans/
-│   ├── README.md
-│   ├── leetcode/
-│   │   ├── cn/
-│   │   │   ├── 面试经典150题.md
-│   ├── nowcoder/
-│   │   ├── 面试高频202.md
-└── .gitignore
+```text
+leetcode/
+├── algorithms/
+│   ├── 1.两数之和.cpp
+│   ├── 11.盛最多水的容器.cpp
+│   ├── ...
+└── README.md
 ```
-
-## 题单列表
-
-[leetcode面试经典150题](./study-plans/leetcode/cn/面试经典150题.md)
-
-[牛客面试高频202](./study-plans/nowcoder/面试高频202.md)
-
-## 题目列表
-
-[leetcode](./problems/leetcode/README.md)
-
-[牛客网](./problems/nowcoder/README.md)
-
 
 ## 贡献指南
 
