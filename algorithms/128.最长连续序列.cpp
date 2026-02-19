@@ -1,25 +1,43 @@
 #include <iostream>
-#include <unordered_set>
 #include <vector>
+#include <algorithm>
+#include <unordered_set>
 using namespace std;
 
-/*
-
-思路：首先把数组中的所有元素放进哈希表，然后遍历哈希表。若num-1不在哈希表中，
-     则说明num是连续序列的第一个数字，此时统计最多能构成的【连续】序列，并更新最大长度。
-
-*/
 class Solution {
 public:
+    /* 解法一：时间复杂度O(nlogn),空间复杂度O(logn)（排序的递归栈空间）
     int longestConsecutive(vector<int>& nums) {
-        unordered_set<int> s(nums.begin(), nums.end());
-        int maxLen = 0;
-        for (int num: s) {
-            if (!s.count(num - 1)) {
-                int cur = num;
+        int size = nums.size();
+        if (size <= 0) return 0;
+        sort(nums.begin(), nums.end());
+        int idx = 1, maxLen = 1, len = 1;
+        while (idx < size) {
+            if (nums[idx] - nums[idx-1] <= 1) {
+                if (nums[idx] - nums[idx-1] == 1)
+                    len ++;
+            } else {
+                maxLen = max(maxLen, len);
+                len = 1;
+            }
+            idx ++;
+        }
+        maxLen = max(maxLen, len);
+        return maxLen;
+    }
+    */
+
+    // 解法二：时间复杂度O(n)，空间复杂度O(n)
+    int longestConsecutive(vector<int>& nums) {
+        int size = nums.size();
+        if (size <= 0) return 0;
+        unordered_set<int> st(nums.begin(), nums.end());
+        int maxLen = 1;
+        for (int x : st) {
+            if (!st.count(x-1)) {
                 int len = 1;
-                while (s.count(cur + 1)) {
-                    cur ++;
+                while (st.count(x+1)) {
+                    x ++;
                     len ++;
                 }
                 maxLen = max(maxLen, len);
@@ -30,11 +48,9 @@ public:
 };
 
 int main() {
-    // 1 2 3 4 100 200
+    Solution s;
+    //vector<int> nums = {1, 0, 1, 2};
     //vector<int> nums = {100,4,200,1,3,2};
-    vector<int> nums = {4,0,-4,-2,2,5,2,0,-8,-8,-8,-8,-1,7,4,5,5,-4,6,6,-3};
-    Solution sol;
-    int ans = sol.longestConsecutive(nums);
-    cout << ans << endl; 
-    return 0; 
+    vector<int> nums = {0,3,7,2,5,8,4,6,0,1};
+    cout << s.longestConsecutive(nums) << endl;
 }
