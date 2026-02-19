@@ -2,32 +2,25 @@
 #include <vector>
 using namespace std;
 
-/*
-
-思路：采用双指针法，从两端向中间移动，每次计算当前能盛的水量并更新最大值。
-
-*/
 class Solution {
 public:
+    // 时间复杂度O(n),空间复杂度O(1)
     int maxArea(vector<int>& height) {
-        int left = 0, right = height.size() - 1, ans = 0;
+        int size = height.size(), result = 0;
+        if (size <= 0) return result;
+        int left = 0, right = size - 1;
         while (left < right) {
-            ans = max(ans, min(height[left], height[right]) * (right - left));
-            if (height[left] < height[right]) {
-                left ++;
-            } else {
-                right --;
-            }
+            int minHeight = min(height[left], height[right]);
+            result = max(result, minHeight * (right - left));
+            if (height[left] < height[right]) left ++;
+            else right --;
         }
-        return ans;
+        return result;
     }
 };
 
 int main() {
-    vector<int> nums = {1,8,6,2,5,4,8,3,7};
-    //vector<int> nums = {1,1};
-    Solution sol;
-    int ans = sol.maxArea(nums);
-    cout << ans << endl;
-    return 0; 
+    Solution s;
+    vector<int> height = {1,8,6,2,5,4,8,3,7};
+    cout << s.maxArea(height) << endl;
 }
